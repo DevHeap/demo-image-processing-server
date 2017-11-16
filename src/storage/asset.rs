@@ -29,9 +29,9 @@ impl Asset {
     }
 
     pub fn open(&mut self) -> Result<(), io::Error> {
+        debug!("Opening {:?}", self.path);
         if self.opened.is_none() {
-            let file = OpenOptions::new().create_new(true).open(&self.path)?;
-            Ok(self.opened = Some(file))
+            Ok(self.opened = Some(File::open(&self.path)?))
         } else {
             Ok(())
         }
